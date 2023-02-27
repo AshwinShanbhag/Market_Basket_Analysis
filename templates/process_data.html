@@ -15,7 +15,9 @@
                         <ul class="list-group">
                             {% for file in files %}
                             <li class="list-group-item">{{ file.name }}
-                                <a href="{{ url_for('results', filename=file.name + '.csv') }}">View Results</a>
+                                <a href="{{ url_for('results', filename=file.name+'.csv') }}">View Results</a> 
+                                <p>{{ url_for('results', filename=file.name+'.csv') }}</p>
+                                
                             </li>
                             {% endfor %}
                         </ul>

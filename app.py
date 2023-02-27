@@ -1,10 +1,16 @@
-import os
+import os, io
 import csv
-from flask import Flask, request, redirect, url_for, render_template, flash, Response
+from flask import Flask, request, redirect, url_for, render_template, flash, Response, session , jsonify
 from werkzeug.utils import secure_filename
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 import pandas as pd
 from apyori import apriori
+import numpy as np
+import seaborn as sns
+import matplotlib
+matplotlib.use('agg')
+import matplotlib.pyplot as plt
+import base64
 
 
 app = Flask(__name__)
@@ -155,16 +161,20 @@ def upload():
     return render_template('upload.html')
 
 
-@app.route('/results')
+@app.route('/results' , methods=['POST', 'GET'])
 @login_required
 def results():
     # Read the data from a CSV file
-    file = 'data1.csv'
     user_email = current_user.email
-
-    #filename = request.args.get('filename')
-    #file = os.path.join(app.config['UPLOAD_FOLDER'], user_email,filename)
-
+    try:
+        filename = request.args.get('filename')
+        print(filename)
+        file = os.path.join(app.config['UPLOAD_FOLDER'],user_email,filename)
+    except:
+        flash("File not uploaded or file has some error")
+        print("File not uploaded or file has some error")
+        redirect('dashboard')
+    
     df = pd.read_csv(file, header=None)
     df.fillna(0, inplace=True)
 
@@ -201,9 +211,8 @@ def results():
     # Search the results based on the 'search' parameter
     if search:
         results = [result for result in results if search.lower() in result['items'].lower()]
-    print(results)
 
-
+    session['results'] = results
     # Render the template with the results
     return render_template('results.html', results=results)
 
@@ -218,6 +227,58 @@ def process_data():
             url = url_for('results', filename=file)
             files.append({'name': name, 'url': url})
     return render_template('process_data.html', files=files)
+
+
+# Second route that uses the data
+
+@app.route('/display' , methods=['POST', 'GET'])
+@login_required
+def display():
+    data = session.get('results',current_user.email)
+    if data:
+        df = pd.DataFrame(data)
+        pivot = df.pivot_table(index='items', values=[ 'lift'], aggfunc='mean', sort=True )
+        
+        # create heatmap
+        sns.heatmap(pivot, cmap="Blues")
+        plt.title("Association Rules Heatmap")
+        plt.savefig('./static/images/heatmap.png')
+        plt.close()
+
+        
+        # create bargraph
+        items = df['items'].apply(lambda x: x).tolist()
+        support = df['support'].tolist()
+        lift = df['lift'].tolist()
+        confidence = df['confidence'].tolist()
+        fig, ax = plt.subplots()
+        ax.bar(items, support, label='Support')
+        ax.bar(items, lift, bottom=support, label='Lift' )
+        ax.bar(items, confidence, bottom=[support[i] + lift[i] for i in range(len(support))], label='Confidence')
+        ax.legend()
+        plt.title("Association Rules Bargraph")
+        plt.xticks(rotation=90)
+        plt.savefig('./static/images/bargraph.png')
+        plt.close()
+        
+            # Extract the data to plot
+        x = [d['support'] for d in data]
+        y = [d['confidence'] for d in data]
+        s = [d['lift']*100 for d in data]  # Scale lift values for size of markers
+
+        # Create the scatter plot
+        plt.scatter(x, y, s=s)
+        plt.xlabel('Support')
+        plt.ylabel('Confidence')
+        plt.title('Association Rules')
+        
+        # Save the plot to a file
+        plt.savefig('./static/images/scatterplot.png')
+    else:
+        return redirect(url_for('dashboard'))
+    
+    return render_template('display.html', heatmap="heatmap.png", bargraph="bargraph.png", scatterplot= "scatterplot.png")
+
 
 
 
