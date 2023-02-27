@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Apriori Results {% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+	
+<div class="container ">
+	<div class="card">
+		<div class="row">		
+			<div class="col-lg-6">
+				<div class="card">
+					<div class="card-header align-content-center"><h2>Association Rule Mining Results: Item Lift and Confidence</h2></div>
+					<div class="card-body">
+						{% if heatmap %}
+						<img src= "{{url_for('static', filename='/images/heatmap.png')}}" >
+							{{ heatmap|safe }}
+						{% else %}
+							<p>No data to display.</p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="card">
+					<div class="card-header align-content-center"><h2>Association Rule Mining Results: Item Lift and Confidence</h2></div>
+					<div class="card-body">
+						{% if bargraph %}
+						<img src= "{{url_for('static', filename='/images/bargraph.png')}}" >
+							{{ bargraph|safe }}
+						{% else %}
+							<p>No data to display.</p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="card">
+					<div class="card-header align-content-center"><h2>Association Rule Mining Results: Item Lift and Confidence</h2></div>
+					<div class="card-body">
+						{% if scatterplot %}
+						<img src= "{{url_for('static', filename='/images/scatterplot.png')}}" >
+							{{ scatterplot|safe }}
+						{% else %}
+							<p>No data to display.</p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+</div>
+<div class="container">
+	<div class="card">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Conclusion</h2>
+				<p>In conclusion, market basket analysis can be used to identify item combinations and their frequency of occurrence. This information can be used to optimize product placement and increase sales.</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+	{% endblock %}
