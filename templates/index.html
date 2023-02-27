@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | Market Basket Analysis{% endblock %}
+
+
+
+{% block content %}
+    <!-- Header -->
+    <header class="jumbotron">
+      <div class="container">
+        <h1 class="display-4">Market Basket Analysis</h1>
+        <p class="lead">Discover how this powerful technique can help you increase sales.</p>
+        <a href="/learnmore" class="btn btn-primary">Learn More</a>
+
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container" id="learn-more">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>What is Market Basket Analysis?</h2>
+          <p>Market Basket Analysis is a powerful technique used by retailers to uncover relationships between products that are frequently purchased together. By analyzing transaction data, retailers can gain insights into what products are commonly bought together, and use that information to increase sales.</p>
+        </div>
+        <div class="col-md-6">
+          <h2>How Can It Help Retailers?</h2>
+          <p>Market Basket Analysis can help retailers in a number of ways, including:</p>
+          <ul>
+            <li>Improving product recommendations</li>
+            <li>Optimizing product placement in stores</li>
+            <li>Increasing cross-selling and up-selling opportunities</li>
+            <li>Identifying new product opportunities</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+{% endblock %}

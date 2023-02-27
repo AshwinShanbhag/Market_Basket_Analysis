@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} Market Basket Analysis{% endblock %}
+{% block content %}
+<body>
+
+
+    <div class="container">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert alert-info">
+            <ul>
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      {% endwith %}
+
+
+      {% endblock %}
+
+  </body>
+</html>

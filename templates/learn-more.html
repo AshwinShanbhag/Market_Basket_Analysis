@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Learn More | Market Basket Analysis{% endblock %}
+
+
+{% block content %}
+<div class="container mt-5">
+<div class="row">
+<div class="col-md-8">
+<h1 class="mb-3">What is Market Basket Analysis?</h1>
+<p>Market Basket Analysis (MBA) is a data mining technique that analyzes a customer's purchase history to identify patterns and relationships between the different products that are purchased together. MBA is used to understand customer behavior, improve sales and marketing strategies, and optimize product placement and inventory management.</p>
+              <h2 class="mt-5 mb-3">How does Market Basket Analysis work?</h2>
+            <p>MBA is based on the Apriori algorithm, which is used to generate association rules from transactional data. In MBA, a transaction is a collection of items purchased by a customer in a single visit to a store or website. The Apriori algorithm works by first identifying all the individual items that are purchased and their frequencies. It then generates candidate itemsets by combining items that have a minimum support (i.e., frequency) and applies the support, confidence, and lift metrics to filter out uninteresting rules.</p>
+
+            <h2 class="mt-5 mb-3">Why is Market Basket Analysis important?</h2>
+            <p>MBA is important because it provides insights into customer behavior and helps retailers to optimize their sales and marketing strategies. By identifying the products that are commonly purchased together, retailers can create promotions and discounts that incentivize customers to buy more. They can also optimize their product placement and inventory management to ensure that the products that are commonly purchased together are located near each other and are always in stock.</p>
+
+            <h2 class="mt-5 mb-3">How can Market Basket Analysis be applied?</h2>
+            <p>Market Basket Analysis has several applications in the retail industry, including:</p>
+            <ul>
+                <li><strong>Cross-selling opportunities:</strong> By identifying the products that are frequently purchased together, retailers can create cross-selling opportunities by recommending related products to customers.</li>
+                <li><strong>Personalized recommendations:</strong> Retailers can use MBA to create personalized product recommendations for customers based on their purchase history.</li>
+                <li><strong>Store layout and product placement:</strong> MBA can help retailers optimize their store layout and product placement by ensuring that the products that are commonly purchased together are located near each other.</li>
+                <li><strong>Inventory management:</strong> By understanding which products are frequently purchased together, retailers can optimize their inventory management and ensure that they always have sufficient stock of these products.</li>
+                <li><strong>Targeted marketing campaigns:</strong> MBA can help retailers create targeted marketing campaigns by identifying customer segments that are more likely to purchase certain products.</li>
+            </ul>
+
+            <h2 class="mt-5 mb-3">Example of Market Basket Analysis</h2>
+            <p>Let's say a retailer wants to understand the purchasing behavior of their customers in order to create targeted promotions and discounts. They can use Market Basket Analysis to identify which products are frequently purchased together. Here's an example:</p>
+            <ul>
+                <li>A customer purchases bread and butter together in one transaction.</li>
+                <li>The retailer's Market Basket Analysis algorithm identifies the association rule: "If a customer buys bread, they are likely to buy butter."</li>
+                <li>Based on this rule, the retailer can create a promotion that offers a discount on butter when a customer purchase with bread.</li>
+<li>The promotion is targeted at customers who buy bread, increasing the likelihood that they will also buy butter and take advantage of the discount.</li>
+</ul>
+          <h2 class="mt-5 mb-3">Other Information Retailers Want to Know from Market Basket Analysis</h2>
+        <p>Market Basket Analysis can also help retailers answer other important questions, such as:</p>
+        <ul>
+            <li>Which products are most frequently purchased together?</li>
+            <li>Which products are commonly purchased alone?</li>
+            <li>Which products are most likely to be purchased as part of a larger basket?</li>
+            <li>What is the average size of a customer's shopping basket?</li>
+            <li>Which products have the highest profit margin when sold together?</li>
+            <li>Which products have the highest correlation with customer loyalty?</li>
+        </ul>
+
+        <p>By answering these questions, retailers can optimize their sales and marketing strategies, increase revenue, and improve customer satisfaction.</p>
+
+
+ {% endblock %}

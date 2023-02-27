@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up | Market Basket Analysis{% endblock %}
+
+{% block content %}
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-P9I/cKh0dRtjWxkf8KNZzPCh0wFfKtt0GBrcUD3NE2voN/rpnOaO43gfsKruF8rMQrHrYp/7gT06TJjKf/iX9Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Sign Up</h1>
+    <form method="post">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+  </div>
+  <div class="text-center">
+              <p>Already a user? <a href="{{ url_for('login') }}">Login</a></p>
+
+            </div>
+
+  <!-- Add Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-MQWwwN8URJwZmhIN5ny5c/3od/PP8nfwyHrx9o62POCtI1aezcx1CwQ4roAf4VTmqg+V/XdD1yH2X7LrEiODA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+{% endblock %}

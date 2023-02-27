@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Apriori Results {% endblock %}
+{% block content %}
+<br>
+<br>
+<br>
+
+<div class="hmm">
+
+<div class="container">
+
+  <h1>Apriori Results</h1>
+
+  <form method="get" class="form-inline">
+    <div class="form-group">
+      <label for="sortby">Sort by:</label>
+      <select class="form-control ml-2" name="sortby" id="sortby">
+        <option value="support">Support (high to low)</option>
+        <option value="support_asc">Support (low to high)</option>
+        <option value="confidence">Confidence (high to low)</option>
+        <option value="confidence_asc">Confidence (low to high)</option>
+        <option value="lift">Lift (high to low)</option>
+        <option value="lift_asc">Lift (low to high)</option>
+      </select>
+    </div>
+    <div class="form-group ml-4">
+      <label for="search">Search:</label>
+      <input type="text" class="form-control ml-2" name="search" id="search" value="{{ request.args.get('search', '') }}">
+    </div>
+    <button type="submit" class="btn btn-primary ml-4">Filter</button>
+
+  </form>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th>Items</th>
+        <th>
+          <a href="{{ url_for('results', sortby='support_desc', search=request.args.get('search', '')) }}">Support</a>
+        </th>
+        <th>
+          <a href="{{ url_for('results', sortby='confidence_desc', search=request.args.get('search', '')) }}">Confidence</a>
+        </th>
+        <th>
+          <a href="{{ url_for('results', sortby='lift_desc', search=request.args.get('search', '')) }}">Lift</a>
+        </th>
+      </tr>
+    </thead>
+<tbody>
+      {% for result in results %}
+      <tr>
+        <td>{{ result['items'] }}</td>
+        <td>{{ result['support'] }}</td>
+        <td>{{ result['confidence'] }}</td>
+        <td>{{ result['lift'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+  {% endblock %}

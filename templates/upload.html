@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto mt-5">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h1 class="text-center">Upload File</h1>
+          </div>
+          <div class="card-body">
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul class="flashes">
+                  {% for message in messages %}
+                    <li class="alert alert-danger">{{ message }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+            <form method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="file">Choose file to upload:</label>
+                <input type="file" class="form-control-file" name="file" id="file">
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary">Upload</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {% endblock %}
+
+  <style>
+    .container {
+      margin-top: 50px;
+    }
+
+    .flashes {
+      list-style: none;
+      padding: 0;
+    }
+
+    .flashes li {
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+  </style>
+{% endblock %}
