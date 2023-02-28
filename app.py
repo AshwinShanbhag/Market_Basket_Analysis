@@ -19,7 +19,7 @@ app.config['UPLOAD_FOLDER'] ='uploads'
 
 app.config['PERMANENT_SESSION_LIFETIME'] = 1800
 
-app.secret_key = 'your_secret_key_here'
+app.secret_key = 'you-secret-key-here'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -161,21 +161,18 @@ def upload():
     return render_template('upload.html')
 
 
-@app.route('/results' , methods=['POST', 'GET'])
+@app.route('/results')
 @login_required
 def results():
     # Read the data from a CSV file
+
     user_email = current_user.email
-    try:
-        filename = request.args.get('filename')
-        print(filename)
-        file = os.path.join(app.config['UPLOAD_FOLDER'],user_email,filename)
-    except:
-        flash("File not uploaded or file has some error")
-        print("File not uploaded or file has some error")
-        redirect('dashboard')
-    
-    df = pd.read_csv(file, header=None)
+
+    filename = request.args.get('filename')
+    #file = os.path.join(app.config['UPLOAD_FOLDER'], user_email,filename)
+    file_path = "./uploads/ashwin@gmail.com/data_set2.csv"
+
+    df = pd.read_csv(file_path, header=None)
     df.fillna(0, inplace=True)
 
     # Transform DataFrame into list of transactions
@@ -201,22 +198,33 @@ def results():
     search = request.args.get('search', default=None, type=str)
 
     # Sort the results based on the 'sortby' parameter
-    if sortby == 'support':
+    if sortby == 'support_desc':
         results = sorted(results, key=lambda k: k['support'], reverse=True)
-    elif sortby == 'confidence':
+    elif sortby == 'support_asc':
+        results = sorted(results, key=lambda k: k['support'])
+    elif sortby == 'confidence_desc':
         results = sorted(results, key=lambda k: k['confidence'], reverse=True)
-    elif sortby == 'lift':
+    elif sortby == 'confidence_asc':
+        results = sorted(results, key=lambda k: k['confidence'])
+    elif sortby == 'lift_desc':
         results = sorted(results, key=lambda k: k['lift'], reverse=True)
+    elif sortby == 'lift_asc':
+        results = sorted(results, key=lambda k: k['lift'])
 
     # Search the results based on the 'search' parameter
     if search:
         results = [result for result in results if search.lower() in result['items'].lower()]
 
     session['results'] = results
+
+
     # Render the template with the results
-    return render_template('results.html', results=results)
+    return render_template('results.html', results=results, filename=filename)
+
+
 
 @app.route('/process_data')
+@login_required
 def process_data():
     uploads_path = os.path.join(app.root_path, 'uploads', current_user.email)
     file_list = os.listdir(uploads_path)
@@ -226,15 +234,13 @@ def process_data():
             name = os.path.splitext(file)[0]  # get file name without extension
             url = url_for('results', filename=file)
             files.append({'name': name, 'url': url})
-    return render_template('process_data.html', files=files)
-
-
-# Second route that uses the data
+    return render_template('process_data.html', files=files )
 
 @app.route('/display' , methods=['POST', 'GET'])
 @login_required
 def display():
     data = session.get('results',current_user.email)
+    print(data)
     if data:
         df = pd.DataFrame(data)
         pivot = df.pivot_table(index='items', values=[ 'lift'], aggfunc='mean', sort=True )
